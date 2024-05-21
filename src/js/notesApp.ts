@@ -1,3 +1,4 @@
+import { Textarea } from "./composable/Textarea";
 import { NotesCollection } from "./notesCollection";
 import { HTMLBuilder } from "./utils/htmlBuilder";
 
@@ -27,10 +28,23 @@ export class NotesApp {
   private notesListAddNoteBtn: HTMLButtonElement = this.notesList.querySelector(".button") as HTMLButtonElement;
   /* END HTML Elements */
 
+  private customTextarea: HTMLDivElement;
+  private textarea: Textarea;
+
   private notesCollection: NotesCollection = new NotesCollection(this.notesList);
   private state: keyof typeof States = this.setState(States.IDLE);
 
   constructor(private container: HTMLElement) {
+    this.customTextarea = this.container.querySelector(".customTextarea") as HTMLDivElement;
+    this.textarea = new Textarea(this.customTextarea, {
+      handlers: {
+        add: (text: string) => {
+          this.notesCollection.add(`Random note no. ${Math.random().toString().slice(2, 6)}`, text);
+          this.setState(States.IDLE);
+        },
+      },
+    });
+
     /* Bind listeners */
     this.searchInput.addEventListener("input", this.searchNotes.bind(this));
     [this.noNotesYetFieldAddNoteBtn, this.notesListAddNoteBtn].forEach((btn) => {
@@ -39,14 +53,7 @@ export class NotesApp {
       });
     });
     this.addNewNoteCancelBtn.addEventListener("click", () => {
-      this.setState(States.IDLE);
-    });
-
-    this.addNewNoteConfirmBtn.addEventListener("click", () => {
-      this.notesCollection.add(
-        `Random note no. ${Math.random().toString().slice(2, 6)}`,
-        this.addNewNoteArea.querySelector("textarea")!.value
-      );
+      this.textarea.resetValue();
       this.setState(States.IDLE);
     });
 
@@ -98,5 +105,9 @@ export class NotesApp {
     if (!e.target || !("value" in e.target)) return;
 
     this.notesCollection.hideEveryNotContaining(e.target.value as string);
+  }
+
+  addNoteHandler(e: any) {
+    console.log(e);
   }
 }

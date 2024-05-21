@@ -17,11 +17,11 @@ export class Textarea {
   private addButton: HTMLButtonElement;
   private dragger: SVGElement;
 
-  constructor(private readonly container: HTMLDivElement, options: TextareaOptions) {
+  constructor(private readonly container: HTMLDivElement, options?: TextareaOptions) {
     this.container.classList.add("textarea-container");
     this.container.id = "textarea-container";
 
-    this.options = this.validateOptions(options);
+    this.options = this.validateOptions(options || {});
     this.createInnerElements();
 
     this.addButton.addEventListener("click", this.handleClick.bind(this));
