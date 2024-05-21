@@ -8,11 +8,7 @@ type createOptions = Readonly<{
 }>;
 
 export class HTMLBuilder {
-  public static createElement<T extends HTMLElement>(
-    tag: keyof HTMLElementTagNameMap,
-    parent: HTMLElement,
-    opts?: createOptions
-  ): T {
+  public static createElement<T extends HTMLElement>(tag: keyof HTMLElementTagNameMap, parent: HTMLElement, opts?: createOptions): T {
     const el = document.createElement(tag);
 
     if (opts?.id) {
@@ -47,5 +43,13 @@ export class HTMLBuilder {
     }
 
     return parent.appendChild(el) as T;
+  }
+
+  public static setVisibility(element: HTMLElement, visible: boolean) {
+    if (!(element instanceof HTMLElement)) {
+      console.warn("[setVisibility] No instanceof element:", element);
+      return;
+    }
+    element.classList[visible ? "remove" : "add"]("hidden");
   }
 }
