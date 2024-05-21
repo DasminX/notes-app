@@ -15,11 +15,13 @@ export class NotesCollection {
     this.updateHTMLList();
   }
   public remove(id: Note["id"]) {
-    this.notes.filter((note) => note.id != id);
+    this.notes = this.notes.filter((note) => note.id != id);
     this.updateHTMLList();
   }
 
-  /* Add lowercase */
+  /* TODO Add always lowercasing */
+  /* TODO PADDING RIGHT  */
+  /* TODO simplification, check */
   public hideEveryNotContaining(text: string) {
     this.listContainer.querySelectorAll(".note").forEach((note) => {
       if (text.trim() == "") {

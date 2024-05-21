@@ -5,6 +5,7 @@ type createOptions = Readonly<{
   readonly src?: string;
   readonly dataset?: Record<string, string>;
   readonly styles?: Record<keyof CSSStyleDeclaration, string>;
+  readonly placeholder?: string;
 }>;
 
 export class HTMLBuilder {
@@ -42,7 +43,17 @@ export class HTMLBuilder {
       }
     }
 
+    if (opts?.placeholder && "placeholder" in el) {
+      el.placeholder = opts.placeholder;
+    }
+
     return parent.appendChild(el) as T;
+  }
+
+  public static insertAdjacentHTML<T extends Element>(into: Element, at: InsertPosition, returnElementWithSelector: string, HTML: string) {
+    into.insertAdjacentHTML(at, HTML);
+
+    return into.querySelector(returnElementWithSelector) as T;
   }
 
   public static setVisibility(element: HTMLElement, visible: boolean) {

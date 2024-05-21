@@ -2,10 +2,14 @@ import { NotesCollection } from "./notesCollection";
 import { HTMLBuilder } from "./utils/htmlBuilder";
 
 const enum States {
-  ADDING = "ADDING",
-  EDITING = "EDITING",
+  CHANGING = "CHANGING",
   IDLE = "IDLE",
 }
+
+/* TODO:
+- resizer as a seperate class, self creating and handling (provided "empty" placeholder container as param)
+- self living Note (created html inside)
+*/
 
 export class NotesApp {
   /* HTML Elements */
@@ -31,7 +35,7 @@ export class NotesApp {
     this.searchInput.addEventListener("input", this.searchNotes.bind(this));
     [this.noNotesYetFieldAddNoteBtn, this.notesListAddNoteBtn].forEach((btn) => {
       btn.addEventListener("click", () => {
-        this.setState(States.ADDING);
+        this.setState(States.CHANGING);
       });
     });
     this.addNewNoteCancelBtn.addEventListener("click", () => {
@@ -45,6 +49,24 @@ export class NotesApp {
       );
       this.setState(States.IDLE);
     });
+
+    this.notesList.addEventListener("click", (e) => {
+      if (!(e.target instanceof HTMLElement) && !(e.target instanceof SVGElement)) return;
+
+      const closestNote = e.target.closest(".note");
+      if (!closestNote) return;
+
+      const id = (closestNote as HTMLDivElement).dataset?.id;
+      if (id == undefined) return;
+
+      if (e.target.classList.contains("edit")) {
+        // TODO
+        this.setState(States.CHANGING);
+      } else if (e.target.classList.contains("remove")) {
+        this.notesCollection.remove(id);
+        this.setState(this.state);
+      }
+    });
   }
 
   /* Main state function */
@@ -54,7 +76,7 @@ export class NotesApp {
         HTMLBuilder.setVisibility(this.addNewNoteArea, false);
         HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, true);
         break;
-      case States.ADDING:
+      case States.CHANGING:
         HTMLBuilder.setVisibility(this.addNewNoteArea, true);
         HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, false);
         break;

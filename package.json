@@ -1,6 +1,11 @@
 {
   "name": "mptask",
   "version": "1.0.0",
+  "author": "Wojciech Szpila",
+  "repository": {
+    "url": "https://github.com/DasminX/notes-app"
+  },
+  "license": "ISC",
   "description": "Mindpal recruitment task - notes app",
   "default": "src/index.ts",
   "source": [
@@ -11,14 +16,12 @@
     "start": "parcel src/index.html",
     "build": "parcel build src/**/*.html src/index.ts"
   },
-  "author": "Wojciech Szpila",
-  "license": "ISC",
+  "dependencies": {
+    "uuid": "^9.0.1"
+  },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0",
     "@types/uuid": "^9.0.8",
     "parcel": "^2.12.0"
-  },
-  "dependencies": {
-    "uuid": "^9.0.1"
   }
 }
