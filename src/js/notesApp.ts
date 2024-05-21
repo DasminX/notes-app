@@ -7,11 +7,6 @@ const enum States {
   IDLE = "IDLE",
 }
 
-/* TODO:
-- resizer as a seperate class, self creating and handling (provided "empty" placeholder container as param)
-- self living Note (created html inside)
-*/
-
 export class NotesApp {
   /* HTML Elements */
   private searchInput: HTMLInputElement = this.container.querySelector("#searchbar > input") as HTMLInputElement;
@@ -28,9 +23,8 @@ export class NotesApp {
 
   private customTextarea: HTMLDivElement;
   private textarea: Textarea;
-
-  private notesCollection: NotesCollection = new NotesCollection(this.notesList);
-  private state: keyof typeof States = this.setState(States.IDLE);
+  private notesCollection: NotesCollection;
+  private state: keyof typeof States;
 
   constructor(private container: HTMLElement) {
     this.customTextarea = this.container.querySelector(".customTextarea") as HTMLDivElement;
@@ -42,6 +36,9 @@ export class NotesApp {
         },
       },
     });
+
+    this.notesCollection = new NotesCollection(this.notesList);
+    this.state = this.setState(States.IDLE);
 
     /* Bind listeners */
     this.searchInput.addEventListener("input", this.searchNotes.bind(this));

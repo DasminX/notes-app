@@ -82,6 +82,8 @@ export class Textarea {
   }
 
   private handleClick() {
+    if (this.value.trim() === "") return;
+
     if (typeof this.options.handlers?.add == "function") {
       this.options.handlers?.add(this.value);
     }
