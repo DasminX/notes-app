@@ -1,4 +1,4 @@
-import { NotesAppCreator } from "./NotesAppCreator";
+import { NotesApp } from "./notesApp";
 
 (() => {
   const notesAppContainer = document.querySelector("#notesAppContainer");
@@ -6,5 +6,5 @@ import { NotesAppCreator } from "./NotesAppCreator";
     throw new Error("Notes app error does not exist. Die.");
   }
 
-  new NotesAppCreator(notesAppContainer);
+  new NotesApp(notesAppContainer);
 })();

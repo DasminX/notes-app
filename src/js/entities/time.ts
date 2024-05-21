@@ -16,15 +16,15 @@ export class Time {
 
   private _now: Date = new Date(Date.now());
 
-  get now() {
+  public get nowUTC() {
     return this._now.toUTCString();
   }
 
   public getMonthDayAsString(): string {
-    return `${this.getMonthName(this._now.getMonth() + 1)} ${this._now.getDate()}`;
+    return `${this.getMonthName()} ${this._now.getDate()}`;
   }
 
-  public getMonthName(month: number): string {
-    return this.monthNames[month] ?? "Easter egg";
+  public getMonthName(): string {
+    return this.monthNames[this._now.getMonth() + 1] ?? "Easter egg by DasminX :)";
   }
 }
