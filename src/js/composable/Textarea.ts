@@ -79,10 +79,9 @@ export class Textarea {
   }
 
   private handleClick() {
-    this.textareaElement.value = "";
-
     if (typeof this.options.handlers?.add == "function") {
-      this.options.handlers?.add();
+      this.options.handlers?.add(this.textareaElement.value);
     }
+    this.textareaElement.value = "";
   }
 }
