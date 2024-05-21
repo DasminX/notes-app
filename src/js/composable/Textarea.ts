@@ -80,8 +80,9 @@ export class Textarea {
 
   private handleClick() {
     if (typeof this.options.handlers?.add == "function") {
-      this.options.handlers?.add(this.textareaElement.value);
+      this.options.handlers?.add(this.value);
     }
-    this.textareaElement.value = "";
+
+    this.resetValue();
   }
 }
