@@ -1,0 +1,24 @@
+{
+  "name": "mptask",
+  "version": "1.0.0",
+  "description": "Mindpal recruitment task - notes app",
+  "default": "src/index.ts",
+  "source": [
+    "src/index.html"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel src/index.html",
+    "build": "parcel build src/**/*.html src/index.ts"
+  },
+  "author": "Wojciech Szpila",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
+    "@types/uuid": "^9.0.8",
+    "parcel": "^2.12.0"
+  },
+  "dependencies": {
+    "uuid": "^9.0.1"
+  }
+}

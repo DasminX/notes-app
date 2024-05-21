@@ -1,0 +1,27 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Inter;
+  max-width: 768px;
+  margin: 0 auto;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#notesAppContainer {
+  position: relative;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+button {
+  cursor: pointer;
+}

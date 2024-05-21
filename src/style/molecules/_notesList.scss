@@ -1,0 +1,27 @@
+.notesList {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: auto;
+  row-gap: 24px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(27, 28, 30, 0.52);
+    border-radius: 12px;
+  }
+
+  .button.dark {
+    width: 100%;
+    text-align: center;
+  }
+}

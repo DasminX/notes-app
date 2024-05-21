@@ -1,0 +1,48 @@
+.customTextarea {
+  position: relative;
+  padding: 10px 16px 24px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 2px solid #1b1c1e;
+  height: 170px;
+  min-height: 80px;
+  max-height: 210px;
+
+  textarea {
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 25.6px;
+    font-weight: 400;
+    color: #5b5c5e;
+    border: none;
+    resize: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  .add {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(-25%, -25%);
+    padding: 8px 16px;
+    border-radius: 12px;
+    background-color: #6b3c9b33;
+    border: none;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    color: #1b1c1e5c;
+  }
+
+  .resizer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(-25%, -25%);
+    cursor: nw-resize;
+  }
+}

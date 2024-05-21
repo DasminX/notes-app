@@ -1,0 +1,29 @@
+.searchbar {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background-color: #eeeff0;
+  color: #5b5c5e;
+  column-gap: 8px;
+  width: 100%;
+
+  svg {
+    aspect-ratio: 1/1;
+    width: 24px;
+  }
+
+  input {
+    padding-block: 0;
+    padding-inline: 0;
+    height: 24px;
+    flex-grow: 1;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: Inter;
+    line-height: 25.6px;
+    background-color: transparent;
+  }
+}

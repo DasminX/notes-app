@@ -1,0 +1,43 @@
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+  height: 40px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  transition: 0.2s;
+
+  &.dark {
+    background-color: #6b3c9b;
+    color: #ffffff;
+    border: none;
+
+    &:hover {
+      background-color: #844dba;
+    }
+
+    &:active {
+      background-color: #5b2f87;
+    }
+  }
+
+  &.light {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #cccccc;
+
+    &:hover {
+      background-color: #e7e7e7;
+    }
+
+    &:active {
+      background-color: #bdbdbd;
+    }
+  }
+}
