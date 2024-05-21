@@ -18,8 +18,6 @@ export class NotesApp {
 
   private addNewNoteArea: HTMLDivElement = this.container.querySelector("#addNewNote") as HTMLDivElement;
   private addNewNoteCancelBtn: HTMLButtonElement = this.addNewNoteArea.querySelector(".cancel") as HTMLButtonElement;
-  private addNewNoteConfirmBtn: HTMLButtonElement = this.addNewNoteArea.querySelector(".add") as HTMLButtonElement;
-  private addNewNoteAreaResizer: SVGElement = this.addNewNoteArea.querySelector(".resizer") as SVGElement;
 
   private noNotesYetField: HTMLDivElement = this.container.querySelector("#noNotesYet") as HTMLDivElement;
   private noNotesYetFieldAddNoteBtn: HTMLButtonElement = this.noNotesYetField.querySelector(".button") as HTMLButtonElement;

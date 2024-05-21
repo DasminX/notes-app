@@ -15,7 +15,10 @@ export class Textarea {
   private options: TextareaOptions;
   private textareaElement: HTMLTextAreaElement;
   private addButton: HTMLButtonElement;
+
+  // TODO
   private dragger: SVGElement;
+  private isDragging: boolean = false;
 
   constructor(private readonly container: HTMLDivElement, options?: TextareaOptions) {
     this.container.classList.add("textarea-container");
