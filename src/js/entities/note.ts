@@ -76,7 +76,7 @@ export class Note {
         </div>`
     );
 
-    this._titleHTMLElement = this._noteHTMLElement.querySelector(".title") as HTMLParagraphElement;
+    this._titleHTMLElement = this._noteHTMLElement.querySelector(".body") as HTMLParagraphElement;
 
     return this._noteHTMLElement;
   }
