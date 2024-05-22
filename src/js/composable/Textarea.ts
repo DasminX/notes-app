@@ -1,6 +1,7 @@
 import { HTMLBuilder } from "../utils/htmlBuilder";
 
 type TextareaOptions = Readonly<{
+  draggable?: boolean;
   placeholder?: string;
   addButton?: {
     classes?: string[];
@@ -15,9 +16,8 @@ export class Textarea {
   private options: TextareaOptions;
   private textareaElement: HTMLTextAreaElement;
   private addButton: HTMLButtonElement;
-
-  // TODO
   private dragger: SVGElement;
+
   private isDragging: boolean = false;
 
   constructor(private readonly container: HTMLDivElement, options?: TextareaOptions) {
@@ -29,6 +29,11 @@ export class Textarea {
     this.createInnerElements();
 
     this.addButton.addEventListener("click", this.handleClick.bind(this));
+
+    HTMLBuilder.setVisibility(this.dragger, this.options.draggable ?? true);
+    if (this.options.draggable) {
+      this.applyDragging();
+    }
   }
 
   public get value() {
@@ -46,6 +51,7 @@ export class Textarea {
   private validateOptions(opts: TextareaOptions) {
     const temp = { ...opts };
 
+    temp.draggable ??= true;
     temp.placeholder ??= "Type here...";
     temp.addButton ??= {};
     temp.addButton.classes ??= [];
@@ -94,5 +100,25 @@ export class Textarea {
     }
 
     this.resetValue();
+  }
+
+  private applyDragging() {
+    document.body.addEventListener("mousedown", (e) => {
+      if (e.target !== this.dragger) return;
+      document.body.style.userSelect = "none";
+      this.isDragging = true;
+    });
+    document.body.addEventListener("mousemove", (e) => {
+      if (!this.isDragging) return;
+      this.textareaElement.style.height = parseFloat(window.getComputedStyle(this.textareaElement).height) + e.movementY + "px";
+    });
+    document.body.addEventListener("mouseup", (e) => {
+      document.body.style.userSelect = "";
+      this.isDragging = false;
+    });
+    document.body.addEventListener("mouseleave", (e) => {
+      document.body.style.userSelect = "";
+      this.isDragging = false;
+    });
   }
 }

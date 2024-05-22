@@ -49,8 +49,7 @@ export class NotesApp {
     });
 
     this.addNewNoteCancelBtn.addEventListener("click", () => {
-      this.textarea.resetValue();
-      this.setState(States.IDLE);
+      this.state = this.setState(States.IDLE);
     });
 
     this.notesList.addEventListener("click", this.notesListClickHandler.bind(this));
@@ -67,6 +66,7 @@ export class NotesApp {
     switch (newState) {
       case States.IDLE:
         this.currentEditedNote = null;
+        this.textarea.resetValue();
         break;
       case States.ADDING:
         this.addNewNoteInfo.textContent = "Add new note";
@@ -103,7 +103,11 @@ export class NotesApp {
       this.state = this.setState(States.EDITING);
     } else if (e.target.classList.contains("remove")) {
       this.notesCollection.remove(noteId);
-      this.state = this.setState(this.state);
+      if (this.currentEditedNote?.id === noteId) {
+        this.state = this.setState(States.IDLE);
+      } else {
+        this.state = this.setState(this.state);
+      }
     }
   }
 

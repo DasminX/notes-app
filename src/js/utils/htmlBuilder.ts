@@ -56,8 +56,8 @@ export class HTMLBuilder {
     return into.querySelector(returnElementWithSelector) as T;
   }
 
-  public static setVisibility(element: HTMLElement, visible: boolean) {
-    if (!(element instanceof HTMLElement)) {
+  public static setVisibility(element: Element, visible: boolean) {
+    if (!(element instanceof Element)) {
       console.warn("[setVisibility] No instanceof element:", element);
       return;
     }
