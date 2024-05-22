@@ -5,11 +5,23 @@ import { HTMLBuilder } from "../utils/htmlBuilder";
 type UUID = ReturnType<typeof uuidv4>;
 
 export class Note {
-  public id: UUID = uuidv4();
-  private addedAt: Time = new Time();
-  private _htmlElement: HTMLDivElement;
+  public readonly id: UUID = uuidv4();
+  public readonly title: string;
+  private _content: string;
+  private _addedAt: Time;
 
-  constructor(public readonly title: string, private _content: string) {}
+  private _noteHTMLElement: HTMLDivElement;
+  private _titleHTMLElement: HTMLParagraphElement;
+
+  constructor(title: string, _content: string) {
+    this.title = title;
+    this._content = _content;
+    this._addedAt = new Time();
+  }
+
+  public get humanReadableDate() {
+    return this._addedAt.monthAndDay;
+  }
 
   public get content() {
     return this._content;
@@ -18,16 +30,12 @@ export class Note {
   public set content(text: string) {
     if (text.trim() !== "") {
       this._content = text;
-      this._htmlElement.querySelector(".title")!.textContent = text;
+      this._titleHTMLElement.textContent = text;
     }
   }
 
-  public get humanReadableDate() {
-    return this.addedAt.getMonthDayAsString();
-  }
-
   public insertHTMLInto(node: Element): HTMLDivElement {
-    this._htmlElement = HTMLBuilder.insertAdjacentHTML(
+    this._noteHTMLElement = HTMLBuilder.insertAdjacentHTML(
       node,
       "beforeend",
       `.note[data-id="${this.id}"]`,
@@ -68,18 +76,20 @@ export class Note {
         </div>`
     );
 
-    return this._htmlElement;
+    this._titleHTMLElement = this._noteHTMLElement.querySelector(".title") as HTMLParagraphElement;
+
+    return this._noteHTMLElement;
   }
 
   public removeFromHTML() {
-    this._htmlElement.remove();
+    this._noteHTMLElement.remove();
   }
 
   public hideIfNotContaining(text: string) {
-    this._htmlElement.classList.remove("hidden");
+    this._noteHTMLElement.classList.remove("hidden");
 
     if (!this.content.toLowerCase().includes(text)) {
-      this._htmlElement.classList.add("hidden");
+      this._noteHTMLElement.classList.add("hidden");
     }
   }
 }

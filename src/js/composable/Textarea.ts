@@ -25,17 +25,10 @@ export class Textarea {
     this.container.id = "textarea-container";
 
     this.options = this.validateOptions(options || {});
+
     this.createInnerElements();
 
     this.addButton.addEventListener("click", this.handleClick.bind(this));
-  }
-
-  public hide() {
-    HTMLBuilder.setVisibility(this.container, false);
-  }
-
-  public show() {
-    HTMLBuilder.setVisibility(this.container, true);
   }
 
   public get value() {

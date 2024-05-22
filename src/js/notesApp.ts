@@ -23,26 +23,23 @@ export class NotesApp {
   private notesListAddNoteBtn: HTMLButtonElement = this.notesList.querySelector(".button") as HTMLButtonElement;
   /* END HTML Elements */
 
-  private customTextarea: HTMLDivElement;
-  private textarea: Textarea;
-  private notesCollection: NotesCollection;
-  private state: keyof typeof States;
+  /* Crucial behaviour-related fields */
+  private textarea: Textarea = new Textarea(this.container.querySelector(".customTextarea") as HTMLDivElement, {
+    handlers: {
+      add: this.addNewNoteCallback.bind(this),
+    },
+  });
+  private notesCollection: NotesCollection = new NotesCollection(this.notesList);
+  private state: keyof typeof States = this.setState(States.IDLE);
   private currentEditedNote: Note | null = null;
+  /* END Crucial behaviour-related fields */
 
   constructor(private container: HTMLElement) {
-    this.customTextarea = this.container.querySelector(".customTextarea") as HTMLDivElement;
-    this.textarea = new Textarea(this.customTextarea, {
-      handlers: {
-        add: this.addNewNoteCallback.bind(this),
-      },
-    });
+    this.bindListeners();
+  }
 
-    this.notesCollection = new NotesCollection(this.notesList);
-    this.state = this.setState(States.IDLE);
-
-    /* Bind listeners */
+  private bindListeners() {
     this.searchInput.addEventListener("input", this.searchNotes.bind(this));
-
     this.noNotesYetFieldAddNoteBtn.addEventListener("click", () => {
       this.state = this.setState(States.ADDING);
     });
@@ -60,32 +57,20 @@ export class NotesApp {
 
   /* Main state function */
   private setState(newState: keyof typeof States) {
-    if (this.notesCollection.length > 0) {
-      HTMLBuilder.setVisibility(this.noNotesYetField, false);
-      HTMLBuilder.setVisibility(this.notesListAddNoteBtn, true);
-    } else {
-      HTMLBuilder.setVisibility(this.noNotesYetField, true);
-      HTMLBuilder.setVisibility(this.notesListAddNoteBtn, false);
-    }
+    /* Change elements visibility */
+    HTMLBuilder.setVisibility(this.noNotesYetField, this.notesCollection.length === 0);
+    HTMLBuilder.setVisibility(this.notesListAddNoteBtn, this.notesCollection.length > 0 && newState === States.IDLE);
+    HTMLBuilder.setVisibility(this.addNewNoteArea, newState !== States.IDLE);
+    HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, newState === States.IDLE);
 
     switch (newState) {
       case States.IDLE:
         this.currentEditedNote = null;
-        HTMLBuilder.setVisibility(this.addNewNoteArea, false);
-        HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, true);
-        break;
-      case States.ADDING:
-        HTMLBuilder.setVisibility(this.addNewNoteArea, true);
-        HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, false);
-        HTMLBuilder.setVisibility(this.notesListAddNoteBtn, false);
         break;
       case States.EDITING:
-        if (newState == States.EDITING && this.currentEditedNote != null) {
+        if (this.currentEditedNote != null) {
           this.textarea.setValue(this.currentEditedNote.content);
         }
-        HTMLBuilder.setVisibility(this.addNewNoteArea, true);
-        HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, false);
-        HTMLBuilder.setVisibility(this.notesListAddNoteBtn, false);
         break;
     }
 
@@ -102,31 +87,27 @@ export class NotesApp {
   private notesListClickHandler(e: any) {
     if (!(e.target instanceof HTMLElement) && !(e.target instanceof SVGElement)) return;
 
-    const id = (e.target.closest(".note") as HTMLDivElement | null)?.dataset?.id;
-    if (id == null) return;
+    const noteId = (e.target.closest(".note") as HTMLDivElement | null)?.dataset?.id;
+    if (noteId == null) return;
 
     if (e.target.classList.contains("edit")) {
-      const note = this.notesCollection.getNoteById(id);
-      if (note == null) return;
+      const edittedNote = this.notesCollection.getNoteById(noteId);
+      if (edittedNote == null) return;
 
-      this.currentEditedNote = note;
+      this.currentEditedNote = edittedNote;
       this.state = this.setState(States.EDITING);
     } else if (e.target.classList.contains("remove")) {
-      this.notesCollection.remove(id);
+      this.notesCollection.remove(noteId);
       this.state = this.setState(this.state);
     }
   }
 
   private addNewNoteCallback(text: string) {
-    if (this.state === States.EDITING) {
-      if (this.currentEditedNote == null) {
-        return;
-      }
-
+    if (this.state === States.EDITING && this.currentEditedNote != null) {
       this.currentEditedNote.content = text;
 
       this.currentEditedNote = null;
-    } else if (this.state === States.ADDING || true) {
+    } else if (this.state === States.ADDING) {
       this.notesCollection.add(`Random note no. ${Math.random().toString().slice(2, 6)}`, text);
     }
     this.state = this.setState(States.IDLE);

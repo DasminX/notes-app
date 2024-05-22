@@ -5,7 +5,7 @@ export class NotesCollection {
 
   constructor(private readonly listContainer: HTMLElement) {}
 
-  get length() {
+  public get length() {
     return this.notes.length;
   }
 
