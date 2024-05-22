@@ -33,20 +33,7 @@ export class NotesApp {
     this.customTextarea = this.container.querySelector(".customTextarea") as HTMLDivElement;
     this.textarea = new Textarea(this.customTextarea, {
       handlers: {
-        add: (text: string) => {
-          if (this.state === States.EDITING) {
-            const note = this.notesCollection.getNoteById(this.currentEditedNote?.id ?? "");
-            if (!note) {
-              this.currentEditedNote = null;
-              return;
-            }
-
-            note.content = text;
-          } else if (this.state === States.ADDING || true) {
-            this.notesCollection.add(`Random note no. ${Math.random().toString().slice(2, 6)}`, text);
-          }
-          this.state = this.setState(States.IDLE);
-        },
+        add: this.addNewNoteCallback.bind(this),
       },
     });
 
@@ -73,6 +60,14 @@ export class NotesApp {
 
   /* Main state function */
   private setState(newState: keyof typeof States) {
+    if (this.notesCollection.length > 0) {
+      HTMLBuilder.setVisibility(this.noNotesYetField, false);
+      HTMLBuilder.setVisibility(this.notesListAddNoteBtn, true);
+    } else {
+      HTMLBuilder.setVisibility(this.noNotesYetField, true);
+      HTMLBuilder.setVisibility(this.notesListAddNoteBtn, false);
+    }
+
     switch (newState) {
       case States.IDLE:
         this.currentEditedNote = null;
@@ -82,6 +77,7 @@ export class NotesApp {
       case States.ADDING:
         HTMLBuilder.setVisibility(this.addNewNoteArea, true);
         HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, false);
+        HTMLBuilder.setVisibility(this.notesListAddNoteBtn, false);
         break;
       case States.EDITING:
         if (newState == States.EDITING && this.currentEditedNote != null) {
@@ -89,15 +85,8 @@ export class NotesApp {
         }
         HTMLBuilder.setVisibility(this.addNewNoteArea, true);
         HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, false);
+        HTMLBuilder.setVisibility(this.notesListAddNoteBtn, false);
         break;
-    }
-
-    if (this.notesCollection.length > 0) {
-      HTMLBuilder.setVisibility(this.noNotesYetField, false);
-      HTMLBuilder.setVisibility(this.notesListAddNoteBtn, true);
-    } else {
-      HTMLBuilder.setVisibility(this.noNotesYetField, true);
-      HTMLBuilder.setVisibility(this.notesListAddNoteBtn, false);
     }
 
     return newState;
@@ -126,5 +115,20 @@ export class NotesApp {
       this.notesCollection.remove(id);
       this.state = this.setState(this.state);
     }
+  }
+
+  private addNewNoteCallback(text: string) {
+    if (this.state === States.EDITING) {
+      if (this.currentEditedNote == null) {
+        return;
+      }
+
+      this.currentEditedNote.content = text;
+
+      this.currentEditedNote = null;
+    } else if (this.state === States.ADDING || true) {
+      this.notesCollection.add(`Random note no. ${Math.random().toString().slice(2, 6)}`, text);
+    }
+    this.state = this.setState(States.IDLE);
   }
 }
