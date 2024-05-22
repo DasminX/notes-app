@@ -10,7 +10,7 @@ App has been created for recruitment purposes. It represents simple Notes App, s
 I've published this app on gh-pages, so you can freely enter here: 
 *https://dasminx.github.io/notes-app/*
 
-If you'd like to launch it on your own local machine, no worries! You can do it by following the instruction below.
+If you'd like to launch it on your own local machine, no worries! You can do it by following the instruction [here below](#run-it-on-your-own).
 
 ---
 
@@ -57,6 +57,19 @@ If you'd like to launch it on your own local machine, no worries! You can do it 
 4. Notes App - heart of the application, scans for HTML elements present in index.html, binds event listeners, manipulates visibilty of all elements and changes app's state.
 
 
+## Thoughts
+
+There are many possible ways to make this app grow! When it's not more needed in recruitment process, I surely upgrade it!
+
+**Improvements examples:**
+
+- add data persistence with localstorage
+- add UI theme changer
+- create kind of scheduler and/or reminder for user
+- history of notes/tasks
+- creating accounts by users
+- ... (blank space for more future' thoughts) ...
+
 ## Run it on your own!
 
 1. Clone the repo
@@ -71,4 +84,4 @@ If you'd like to launch it on your own local machine, no worries! You can do it 
     npm run dev
     ```
 
-3. Visit *http://localhost:5173/*. If it doesn't work, you should check if port is taken and if so, enter valid port
+3. Visit *http://localhost:5173/*. If it doesn't work, you should check if port is taken and if so, enter valid port instead.
