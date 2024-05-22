@@ -18,7 +18,6 @@ export class NotesCollection {
   public remove(id: Note["id"]) {
     this.notes = this.notes.filter((note) => {
       if (note.id === id) {
-        console.log("wchodzi", id);
         note.remove();
         return false;
       }
@@ -29,8 +28,7 @@ export class NotesCollection {
   /* TODO PADDING RIGHT  */
   public hideEveryNotContaining(text: string) {
     this.notes.forEach((note) => {
-      note.hideIfContains(text.toLowerCase());
+      note.hideIfNotContaining(text.toLowerCase());
     });
-    console.log(this.notes);
   }
 }

@@ -29,7 +29,7 @@ export class Note {
     this._htmlElement = HTMLBuilder.insertAdjacentHTML(
       node,
       "beforeend",
-      ".note",
+      `.note[data-id="${this.id}"]`,
       `<div class="note" data-id="${this.id}">
         <div class="titlebar">
           <p class="title">${this.title}</p>
@@ -74,12 +74,10 @@ export class Note {
     this._htmlElement.remove();
   }
 
-  public hideIfContains(text: string) {
-    const content = this.content.toLowerCase();
+  public hideIfNotContaining(text: string) {
+    this._htmlElement.classList.remove("hidden");
 
-    if (content.includes(text)) {
-      this._htmlElement.classList.remove("hidden");
-    } else {
+    if (!this.content.toLowerCase().includes(text)) {
       this._htmlElement.classList.add("hidden");
     }
   }
