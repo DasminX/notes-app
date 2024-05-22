@@ -32,10 +32,10 @@ export class Note {
       `.note[data-id="${this.id}"]`,
       `<div class="note" data-id="${this.id}">
         <div class="titlebar">
-          <p class="title">${this.title}</p>
+          <p class="title-medium">${this.title}</p>
           <div class="controls">
             <svg
-              class="edit"
+              class="edit icon-small"
               width="20"
               height="20"
               viewBox="0 0 20 20"
@@ -48,7 +48,7 @@ export class Note {
                 />
               </svg>
               <svg
-                class="remove"
+                class="remove icon-small"
                 width="20"
                 height="20"
                 viewBox="0 0 20 20"
@@ -62,8 +62,8 @@ export class Note {
               </svg>
             </div>
           </div>
-          <p class="body">${this.content}</p>
-          <div class="adddate">${this.humanReadableDate}</div>
+          <p class="text-medium">${this.content}</p>
+          <div class="adddate text-small">${this.humanReadableDate}</div>
         </div>`
     );
 

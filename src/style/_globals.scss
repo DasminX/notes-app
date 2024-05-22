@@ -10,8 +10,7 @@ body {
   font-family: Inter;
   max-width: 768px;
   margin: 0 auto;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
 }
 
 #notesAppContainer {
@@ -28,4 +27,62 @@ button {
 
 .hidden {
   display: none !important;
+}
+
+/* Common */
+
+/* TITLE */
+.title-large {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.title-extramedium {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 25.6px;
+}
+
+.title-medium {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 23.8px;
+}
+
+/* TEXT */
+
+.text-extramedium {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25.6px;
+}
+
+.text-medium {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 23.8px;
+}
+
+.text-small {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15.6px;
+}
+
+/* ICONS */
+
+.icon-large {
+  width: 30px;
+  height: 30px;
+}
+
+.icon-medium {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-small {
+  width: 20px;
+  height: 20px;
 }

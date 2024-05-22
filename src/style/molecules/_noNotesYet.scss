@@ -1,30 +1,20 @@
 .noNotesYet {
-  padding: 16px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
   row-gap: 16px;
+  padding: 16px 0;
 
   .texts {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+
     row-gap: 12px;
     width: 80%;
     text-align: center;
-
-    .text-medium {
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 30px;
-    }
-
-    .text-small {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 25.6px;
-    }
   }
 }
