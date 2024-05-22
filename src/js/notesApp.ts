@@ -11,36 +11,55 @@ const enum States {
 
 export class NotesApp {
   /* HTML Elements */
-  private _searchInput: HTMLInputElement = this._container.querySelector("#searchbar > input") as HTMLInputElement;
+  private _searchInput: HTMLInputElement;
 
-  private _addNewNoteArea: HTMLDivElement = this._container.querySelector("#addNewNote") as HTMLDivElement;
-  private _addNewNoteInfo: HTMLDivElement = this._addNewNoteArea.querySelector(".infofield") as HTMLDivElement;
-  private _addNewNoteCancelBtn: HTMLButtonElement = this._addNewNoteArea.querySelector(".cancel") as HTMLButtonElement;
+  private _addNewNoteArea: HTMLDivElement;
+  private _addNewNoteInfo: HTMLDivElement;
+  private _addNewNoteCancelBtn: HTMLButtonElement;
 
-  private _noNotesYetField: HTMLDivElement = this._container.querySelector("#noNotesYet") as HTMLDivElement;
-  private _noNotesYetFieldAddNoteBtn: HTMLButtonElement = this._noNotesYetField.querySelector(".button") as HTMLButtonElement;
+  private _noNotesYetField: HTMLDivElement;
+  private _noNotesYetFieldAddNoteBtn: HTMLButtonElement;
 
-  private _notesList: HTMLDivElement = this._container.querySelector("#notesList") as HTMLDivElement;
-  private _notesListAddNoteBtn: HTMLButtonElement = this._notesList.querySelector(".button") as HTMLButtonElement;
+  private _notesList: HTMLDivElement;
+  private _notesListAddNoteBtn: HTMLButtonElement;
   /* END HTML Elements */
 
   /* Crucial behaviour-related fields */
-  private _textarea: Textarea = new Textarea(this._container.querySelector(".customTextarea") as HTMLDivElement, {
-    handlers: {
-      add: this._addNewNoteCallback.bind(this),
-    },
-  });
-  private _notesCollection: NotesCollection = new NotesCollection(this._notesList);
-  private _state: keyof typeof States = this._setState(States.IDLE);
-  private _currentEditedNote: Note | null = null;
+  private _textarea: Textarea;
+  private _notesCollection: NotesCollection;
+  private _state: keyof typeof States;
+  private _currentEditedNote: Note | null;
   /* END Crucial behaviour-related fields */
 
   constructor(private readonly _container: HTMLElement) {
+    this._searchInput = this._container.querySelector("#searchbar > input") as HTMLInputElement;
+
+    this._addNewNoteArea = this._container.querySelector("#addNewNote") as HTMLDivElement;
+    this._addNewNoteInfo = this._addNewNoteArea.querySelector(".infofield") as HTMLDivElement;
+    this._addNewNoteCancelBtn = this._addNewNoteArea.querySelector(".cancel") as HTMLButtonElement;
+
+    this._noNotesYetField = this._container.querySelector("#noNotesYet") as HTMLDivElement;
+    this._noNotesYetFieldAddNoteBtn = this._noNotesYetField.querySelector(".button") as HTMLButtonElement;
+
+    this._notesList = this._container.querySelector("#notesList") as HTMLDivElement;
+    this._notesListAddNoteBtn = this._notesList.querySelector(".button") as HTMLButtonElement;
+
+    this._textarea = new Textarea(this._container.querySelector(".customTextarea") as HTMLDivElement, {
+      handlers: {
+        add: this._addNewNoteCallback.bind(this),
+      },
+    });
+    this._notesCollection = new NotesCollection(this._notesList);
+    this._state = this._setState(States.IDLE);
+    this._currentEditedNote = null;
+
     this._bindListeners();
   }
 
   private _bindListeners() {
-    this._searchInput.addEventListener("input", this._searchNotes.bind(this));
+    this._searchInput.addEventListener("input", (e) => {
+      this._searchNotes(e);
+    });
     this._noNotesYetFieldAddNoteBtn.addEventListener("click", () => {
       this._state = this._setState(States.ADDING);
     });
@@ -83,7 +102,7 @@ export class NotesApp {
   }
 
   /* Handlers */
-  private _searchNotes(e: InputEvent) {
+  private _searchNotes(e: Event) {
     if (!e.target || !("value" in e.target)) return;
 
     this._notesCollection.hideEveryNotContaining(e.target.value as string);
