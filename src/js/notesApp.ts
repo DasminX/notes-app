@@ -14,6 +14,7 @@ export class NotesApp {
   private searchInput: HTMLInputElement = this.container.querySelector("#searchbar > input") as HTMLInputElement;
 
   private addNewNoteArea: HTMLDivElement = this.container.querySelector("#addNewNote") as HTMLDivElement;
+  private addNewNoteInfo: HTMLDivElement = this.addNewNoteArea.querySelector(".infofield") as HTMLDivElement;
   private addNewNoteCancelBtn: HTMLButtonElement = this.addNewNoteArea.querySelector(".cancel") as HTMLButtonElement;
 
   private noNotesYetField: HTMLDivElement = this.container.querySelector("#noNotesYet") as HTMLDivElement;
@@ -67,8 +68,12 @@ export class NotesApp {
       case States.IDLE:
         this.currentEditedNote = null;
         break;
+      case States.ADDING:
+        this.addNewNoteInfo.textContent = "Add new note";
+        break;
       case States.EDITING:
         if (this.currentEditedNote != null) {
+          this.addNewNoteInfo.textContent = `Edit ${this.currentEditedNote.title.toLowerCase()}`;
           this.textarea.setValue(this.currentEditedNote.content);
         }
         break;

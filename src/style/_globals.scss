@@ -11,7 +11,7 @@ body {
   max-width: 768px;
   margin: 0 auto;
   overflow: hidden;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 #notesAppContainer {
@@ -34,18 +34,21 @@ button {
 
 /* TITLE */
 .title-large {
+  color: #1b1c1e;
   font-weight: 500;
   font-size: 20px;
   line-height: 30px;
 }
 
 .title-extramedium {
+  color: #1b1c1e;
   font-weight: 500;
   font-size: 16px;
   line-height: 25.6px;
 }
 
 .title-medium {
+  color: #1b1c1e;
   font-weight: 500;
   font-size: 14px;
   line-height: 23.8px;
@@ -54,18 +57,21 @@ button {
 /* TEXT */
 
 .text-extramedium {
+  color: #3b3c3e;
   font-weight: 400;
   font-size: 16px;
   line-height: 25.6px;
 }
 
 .text-medium {
+  color: #3b3c3e;
   font-weight: 400;
   font-size: 14px;
   line-height: 23.8px;
 }
 
 .text-small {
+  color: #3b3c3e;
   font-weight: 400;
   font-size: 12px;
   line-height: 15.6px;
