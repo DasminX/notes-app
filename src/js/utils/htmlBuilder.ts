@@ -50,13 +50,18 @@ export class HTMLBuilder {
     return parent.appendChild(el) as T;
   }
 
-  public static insertAdjacentHTML<T extends Element>(into: Element, at: InsertPosition, returnElementWithSelector: string, HTML: string) {
+  public static insertAdjacentHTML<T extends Element>(
+    into: Element,
+    at: InsertPosition,
+    returnElementWithSelector: string,
+    HTML: string
+  ): T {
     into.insertAdjacentHTML(at, HTML);
 
     return into.querySelector(returnElementWithSelector) as T;
   }
 
-  public static setVisibility(element: Element, visible: boolean) {
+  public static setVisibility(element: Element, visible: boolean): void {
     if (!(element instanceof Element)) {
       console.warn("[setVisibility] No instanceof element:", element);
       return;

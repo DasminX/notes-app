@@ -1,22 +1,22 @@
 import { Note } from "./entities/note";
 
 export class NotesCollection {
-  private notes: Note[] = new Array();
+  private _notes: Note[] = new Array();
 
-  constructor(private readonly listContainer: HTMLElement) {}
+  constructor(private readonly _listContainer: HTMLElement) {}
 
   public get length() {
-    return this.notes.length;
+    return this._notes.length;
   }
 
   public add(title: Note["title"], content: Note["content"]) {
     const newNote = new Note(title, content);
-    newNote.insertHTMLInto(this.listContainer);
-    this.notes.push(newNote);
+    newNote.insertHTMLInto(this._listContainer);
+    this._notes.push(newNote);
   }
 
   public remove(id: Note["id"]) {
-    this.notes = this.notes.filter((note) => {
+    this._notes = this._notes.filter((note) => {
       if (note.id === id) {
         note.removeFromHTML();
         return false;
@@ -26,12 +26,12 @@ export class NotesCollection {
   }
 
   public getNoteById(id: Note["id"]) {
-    return this.notes.find((note) => note.id === id) ?? null;
+    return this._notes.find((note) => note.id === id) ?? null;
   }
 
   /* TODO PADDING RIGHT  */
   public hideEveryNotContaining(text: string) {
-    this.notes.forEach((note) => {
+    this._notes.forEach((note) => {
       note.hideIfNotContaining(text.toLowerCase());
     });
   }

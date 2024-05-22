@@ -13,42 +13,42 @@ type TextareaOptions = Readonly<{
 }>;
 
 export class Textarea {
-  private options: TextareaOptions;
-  private textareaElement: HTMLTextAreaElement;
-  private addButton: HTMLButtonElement;
-  private dragger: SVGElement;
+  private _options: TextareaOptions;
+  private _textareaElement: HTMLTextAreaElement;
+  private _addButton: HTMLButtonElement;
+  private _dragger: SVGElement;
 
-  private isDragging: boolean = false;
+  private _isDragging: boolean = false;
 
-  constructor(private readonly container: HTMLDivElement, options?: TextareaOptions) {
-    this.container.classList.add("textarea-container");
-    this.container.id = "textarea-container";
+  constructor(private readonly _container: HTMLDivElement, options?: TextareaOptions) {
+    this._container.classList.add("textarea-container");
+    this._container.id = "textarea-container";
 
-    this.options = this.validateOptions(options || {});
+    this._options = this._validateOptions(options || {});
 
-    this.createInnerElements();
+    this._createInnerElements();
 
-    this.addButton.addEventListener("click", this.handleClick.bind(this));
+    this._addButton.addEventListener("click", this._handleClick.bind(this));
 
-    HTMLBuilder.setVisibility(this.dragger, this.options.draggable ?? true);
-    if (this.options.draggable) {
-      this.applyDragging();
+    HTMLBuilder.setVisibility(this._dragger, this._options.draggable ?? true);
+    if (this._options.draggable) {
+      this._applyDragging();
     }
   }
 
   public get value() {
-    return this.textareaElement.value;
+    return this._textareaElement.value;
   }
 
   public setValue(value: string) {
-    this.textareaElement.value = value;
+    this._textareaElement.value = value;
   }
 
   public resetValue() {
     this.setValue("");
   }
 
-  private validateOptions(opts: TextareaOptions) {
+  private _validateOptions(opts: TextareaOptions) {
     const temp = { ...opts };
 
     temp.draggable ??= true;
@@ -62,18 +62,18 @@ export class Textarea {
     return temp;
   }
 
-  private createInnerElements() {
-    this.textareaElement = HTMLBuilder.createElement("textarea", this.container, {
-      placeholder: this.options.placeholder,
+  private _createInnerElements() {
+    this._textareaElement = HTMLBuilder.createElement("textarea", this._container, {
+      placeholder: this._options.placeholder,
     });
 
-    this.addButton = HTMLBuilder.createElement("button", this.container, {
-      class: ["add", ...(this.options.addButton?.classes || [])],
-      text: this.options.addButton?.text,
+    this._addButton = HTMLBuilder.createElement("button", this._container, {
+      class: ["add", ...(this._options.addButton?.classes || [])],
+      text: this._options.addButton?.text,
     });
 
-    this.dragger = HTMLBuilder.insertAdjacentHTML(
-      this.container,
+    this._dragger = HTMLBuilder.insertAdjacentHTML(
+      this._container,
       "beforeend",
       ".dragger",
       `
@@ -92,33 +92,33 @@ export class Textarea {
     );
   }
 
-  private handleClick() {
+  private _handleClick() {
     if (this.value.trim() === "") return;
 
-    if (typeof this.options.handlers?.add == "function") {
-      this.options.handlers?.add(this.value);
+    if (typeof this._options.handlers?.add == "function") {
+      this._options.handlers?.add(this.value);
     }
 
     this.resetValue();
   }
 
-  private applyDragging() {
+  private _applyDragging() {
     document.body.addEventListener("mousedown", (e) => {
-      if (e.target !== this.dragger) return;
+      if (e.target !== this._dragger) return;
       document.body.style.userSelect = "none";
-      this.isDragging = true;
+      this._isDragging = true;
     });
     document.body.addEventListener("mousemove", (e) => {
-      if (!this.isDragging) return;
-      this.textareaElement.style.height = parseFloat(window.getComputedStyle(this.textareaElement).height) + e.movementY + "px";
+      if (!this._isDragging) return;
+      this._textareaElement.style.height = parseFloat(window.getComputedStyle(this._textareaElement).height) + e.movementY + "px";
     });
-    document.body.addEventListener("mouseup", (e) => {
+    document.body.addEventListener("mouseup", () => {
       document.body.style.userSelect = "";
-      this.isDragging = false;
+      this._isDragging = false;
     });
-    document.body.addEventListener("mouseleave", (e) => {
+    document.body.addEventListener("mouseleave", () => {
       document.body.style.userSelect = "";
-      this.isDragging = false;
+      this._isDragging = false;
     });
   }
 }
