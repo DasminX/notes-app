@@ -18,6 +18,7 @@ export class Note {
   public set content(text: string) {
     if (text.trim() !== "") {
       this._content = text;
+      this._htmlElement.querySelector(".title")!.textContent = text;
     }
   }
 
@@ -62,7 +63,7 @@ export class Note {
               </svg>
             </div>
           </div>
-          <p class="text-medium">${this.content}</p>
+          <p class="title text-medium">${this.content}</p>
           <div class="adddate text-small">${this.humanReadableDate}</div>
         </div>`
     );
