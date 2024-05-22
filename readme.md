@@ -1,0 +1,61 @@
+# Notes app task
+
+App has been created for recruitment purposes. It represents simple Notes App, specific kind of Todo App.
+*I know it might be overengineered a little bit, but I did it on purpose to show my skills and how I would do it in modular way.*
+
+**It contains such features:**
+
+- Adding new note
+- Editing existing note
+- Removing existing note
+- Exploring notes list
+- Filtering existing notes by given text (case insensitive, only for note body, not title)
+
+**It consists of modules:**
+
+1. Composable textarea - takes configuration options and creates independent, resizable textarea component. **Configuration object is in shape of:**
+
+    ```typescript
+
+    Readonly<{
+        draggable?: boolean | undefined;     // Default true
+        placeholder?: string | undefined;    // Default "Type here..."
+        addButton?: {                        // Default empty object
+            classes?: string[] | undefined;  // Default empty array
+            text?: string | undefined;       // Default "Add"
+        } | undefined;
+        handlers?: {                         // Default empty object
+            add?: Function | undefined;      // Default empty function
+        } | undefined;
+    }>
+
+    ```
+
+    It is ready to be injected in any HTML element.
+
+    <br>
+
+2. Entities "Note" and "Time" - I'm not really sure if these are good names for such constructions. I struggled to choose between "entity" and "value object," but neither term fully captures the meaning I intended. Eventually, I decided to use more generic names.
+
+    <br>
+
+3. Notes collection - the class is collecting and manipulating all Notes created by user. Also, it encapsulates it's behaviour. It is taking this responsibilty from main class "Note app".
+
+    <br>
+
+4. Notes App - heart of the application, scans for HTML elements present in index.html, binds event listeners, manipulates visibilty of all elements and changes app's state.
+
+
+## Run it on your own!
+
+1. Clone the repo
+
+    ```bash
+    git clone 'https://github.com/DasminX/notes-app.git' .
+    ```
+
+2. Start script
+
+    ```bash
+    npm run start
+    ```
