@@ -71,7 +71,7 @@ export class Note {
               </svg>
             </div>
           </div>
-          <p class="title text-medium">${this.content}</p>
+          <p class="body text-medium">${this.content}</p>
           <div class="adddate text-small">${this.humanReadableDate}</div>
         </div>`
     );
