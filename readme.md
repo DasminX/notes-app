@@ -57,7 +57,7 @@ App has been created for recruitment purposes. It represents simple Notes App, s
 2. Start script
 
     ```bash
-    npm run start
+    npm run dev
     ```
 
-3. Visit *http://localhost:1234*. If it doesn't work, you should check if port 1234 is taken and if so, enter valid port.
+3. Visit *http://localhost:5173/*. If it doesn't work, you should check if port 1234 is taken and if so, enter valid port.
