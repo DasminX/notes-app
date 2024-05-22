@@ -18,11 +18,15 @@ export class NotesCollection {
   public remove(id: Note["id"]) {
     this.notes = this.notes.filter((note) => {
       if (note.id === id) {
-        note.remove();
+        note.removeFromHTML();
         return false;
       }
       return true;
     });
+  }
+
+  public getNoteById(id: Note["id"]) {
+    return this.notes.find((note) => note.id === id) ?? null;
   }
 
   /* TODO PADDING RIGHT  */

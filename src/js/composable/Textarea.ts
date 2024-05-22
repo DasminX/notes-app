@@ -30,12 +30,24 @@ export class Textarea {
     this.addButton.addEventListener("click", this.handleClick.bind(this));
   }
 
+  public hide() {
+    HTMLBuilder.setVisibility(this.container, false);
+  }
+
+  public show() {
+    HTMLBuilder.setVisibility(this.container, true);
+  }
+
   public get value() {
     return this.textareaElement.value;
   }
 
+  public setValue(value: string) {
+    this.textareaElement.value = value;
+  }
+
   public resetValue() {
-    this.textareaElement.value = "";
+    this.setValue("");
   }
 
   private validateOptions(opts: TextareaOptions) {

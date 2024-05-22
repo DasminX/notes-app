@@ -1,9 +1,11 @@
 import { Textarea } from "./composable/Textarea";
+import { Note } from "./entities/note";
 import { NotesCollection } from "./notesCollection";
 import { HTMLBuilder } from "./utils/htmlBuilder";
 
 const enum States {
-  CHANGING = "CHANGING",
+  ADDING = "ADDING",
+  EDITING = "EDITING",
   IDLE = "IDLE",
 }
 
@@ -25,14 +27,25 @@ export class NotesApp {
   private textarea: Textarea;
   private notesCollection: NotesCollection;
   private state: keyof typeof States;
+  private currentEditedNote: Note | null = null;
 
   constructor(private container: HTMLElement) {
     this.customTextarea = this.container.querySelector(".customTextarea") as HTMLDivElement;
     this.textarea = new Textarea(this.customTextarea, {
       handlers: {
         add: (text: string) => {
-          this.notesCollection.add(`Random note no. ${Math.random().toString().slice(2, 6)}`, text);
-          this.setState(States.IDLE);
+          if (this.state === States.EDITING) {
+            const note = this.notesCollection.getNoteById(this.currentEditedNote?.id ?? "");
+            if (!note) {
+              this.currentEditedNote = null;
+              return;
+            }
+
+            note.content = text;
+          } else if (this.state === States.ADDING || true) {
+            this.notesCollection.add(`Random note no. ${Math.random().toString().slice(2, 6)}`, text);
+          }
+          this.state = this.setState(States.IDLE);
         },
       },
     });
@@ -42,43 +55,38 @@ export class NotesApp {
 
     /* Bind listeners */
     this.searchInput.addEventListener("input", this.searchNotes.bind(this));
-    [this.noNotesYetFieldAddNoteBtn, this.notesListAddNoteBtn].forEach((btn) => {
-      btn.addEventListener("click", () => {
-        this.setState(States.CHANGING);
-      });
+
+    this.noNotesYetFieldAddNoteBtn.addEventListener("click", () => {
+      this.state = this.setState(States.ADDING);
     });
+    this.notesListAddNoteBtn.addEventListener("click", () => {
+      this.state = this.setState(States.ADDING);
+    });
+
     this.addNewNoteCancelBtn.addEventListener("click", () => {
       this.textarea.resetValue();
       this.setState(States.IDLE);
     });
 
-    this.notesList.addEventListener("click", (e) => {
-      if (!(e.target instanceof HTMLElement) && !(e.target instanceof SVGElement)) return;
-
-      const closestNote = e.target.closest(".note");
-      if (!closestNote) return;
-
-      const id = (closestNote as HTMLDivElement).dataset?.id;
-      if (id == undefined) return;
-
-      if (e.target.classList.contains("edit")) {
-        // TODO
-        this.setState(States.CHANGING);
-      } else if (e.target.classList.contains("remove")) {
-        this.notesCollection.remove(id);
-        this.setState(this.state);
-      }
-    });
+    this.notesList.addEventListener("click", this.notesListClickHandler.bind(this));
   }
 
   /* Main state function */
   private setState(newState: keyof typeof States) {
     switch (newState) {
       case States.IDLE:
+        this.currentEditedNote = null;
         HTMLBuilder.setVisibility(this.addNewNoteArea, false);
         HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, true);
         break;
-      case States.CHANGING:
+      case States.ADDING:
+        HTMLBuilder.setVisibility(this.addNewNoteArea, true);
+        HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, false);
+        break;
+      case States.EDITING:
+        if (newState == States.EDITING && this.currentEditedNote != null) {
+          this.textarea.setValue(this.currentEditedNote.content);
+        }
         HTMLBuilder.setVisibility(this.addNewNoteArea, true);
         HTMLBuilder.setVisibility(this.noNotesYetFieldAddNoteBtn, false);
         break;
@@ -102,7 +110,21 @@ export class NotesApp {
     this.notesCollection.hideEveryNotContaining(e.target.value as string);
   }
 
-  addNoteHandler(e: any) {
-    console.log(e);
+  private notesListClickHandler(e: any) {
+    if (!(e.target instanceof HTMLElement) && !(e.target instanceof SVGElement)) return;
+
+    const id = (e.target.closest(".note") as HTMLDivElement | null)?.dataset?.id;
+    if (id == null) return;
+
+    if (e.target.classList.contains("edit")) {
+      const note = this.notesCollection.getNoteById(id);
+      if (note == null) return;
+
+      this.currentEditedNote = note;
+      this.state = this.setState(States.EDITING);
+    } else if (e.target.classList.contains("remove")) {
+      this.notesCollection.remove(id);
+      this.state = this.setState(this.state);
+    }
   }
 }

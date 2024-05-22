@@ -70,7 +70,7 @@ export class Note {
     return this._htmlElement;
   }
 
-  public remove() {
+  public removeFromHTML() {
     this._htmlElement.remove();
   }
 
