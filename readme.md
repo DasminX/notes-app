@@ -3,6 +3,17 @@
 App has been created for recruitment purposes. It represents simple Notes App, specific kind of Todo App.
 *I know it might be overengineered a little bit, but I did it on purpose to show my skills and how I would do it in modular way.*
 
+---
+
+## Live demo
+
+I've published this app on gh-pages, so you can freely enter here: 
+*https://dasminx.github.io/notes-app/*
+
+If you'd like to launch it on your own local machine, no worries! You can do it by following the instruction below.
+
+---
+
 **It contains such features:**
 
 - Adding new note
@@ -60,4 +71,4 @@ App has been created for recruitment purposes. It represents simple Notes App, s
     npm run dev
     ```
 
-3. Visit *http://localhost:5173/*. If it doesn't work, you should check if port 1234 is taken and if so, enter valid port.
+3. Visit *http://localhost:5173/*. If it doesn't work, you should check if port is taken and if so, enter valid port
