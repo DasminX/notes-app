@@ -52,7 +52,7 @@ export class Textarea {
     const temp = { ...opts };
 
     temp.draggable ??= true;
-    temp.placeholder ??= "Type here...";
+    temp.placeholder ??= "Type your note...";
     temp.addButton ??= {};
     temp.addButton.classes ??= [];
     temp.addButton.text ??= "Add";

@@ -30,7 +30,7 @@ If you'd like to launch it on your own local machine, no worries! You can do it 
 
     Readonly<{
         draggable?: boolean | undefined;     // Default true
-        placeholder?: string | undefined;    // Default "Type here..."
+        placeholder?: string | undefined;    // Default "Type your note..."
         addButton?: {                        // Default empty object
             classes?: string[] | undefined;  // Default empty array
             text?: string | undefined;       // Default "Add"
