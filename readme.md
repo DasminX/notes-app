@@ -46,11 +46,11 @@ If you'd like to launch it on your own local machine, no worries! You can do it 
 
     <br>
 
-2. Entities "Note" and "Time" - I'm not really sure if these are good names for such constructions. I struggled to choose between "entity" and "value object," but neither term fully captures the meaning I intended. Eventually, I decided to use more generic names.
+2. Entities "Note" and "Time" - I'm not really sure if these are good names for such constructions. I struggled to choose between "entity" and "value object," but neither term fully captures the meaning I intended. Eventually, I decided to use more generic name "entity".
 
     <br>
 
-3. Notes collection - the class is collecting and manipulating all Notes created by user. Also, it encapsulates it's behaviour. It is taking this responsibilty from main class "Note app".
+3. NotesCollection - the class is collecting and manipulating all Notes created by user. Also, it encapsulates it's behaviour. It is taking this responsibilty from main class "Note app".
 
     <br>
 
@@ -72,6 +72,8 @@ There are many possible ways to make this app grow! When it's not more needed in
 
 ## Run it on your own!
 
+If you'd like to run this code on your local machine, just follow these steps:
+
 1. Clone the repo
 
     ```bash
@@ -84,4 +86,5 @@ There are many possible ways to make this app grow! When it's not more needed in
     npm run dev
     ```
 
-3. Visit *http://localhost:5173/*. If it doesn't work, you should check if port is taken and if so, enter valid port instead.
+3. Visit *http://localhost:5173/*.
+***NOTE:*** *If it doesn't work, you should check if port is taken and if so, enter a valid port instead.*
