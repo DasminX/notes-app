@@ -24,6 +24,7 @@ TODO LIST FOR ME IN APP:
 - add settings class and modal to manage styles, behaviour etc.
 - clean types
 - htmlBuilder.insertAdjacentHTML to be more declarative (and types to fix!)
+- fix modal size on desktop
 
 ---
 
