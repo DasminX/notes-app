@@ -29,7 +29,6 @@ export class NotesCollection {
     return this._notes.find((note) => note.id === id) ?? null;
   }
 
-  /* TODO PADDING RIGHT  */
   public hideEveryNotContaining(text: string) {
     this._notes.forEach((note) => {
       note.hideIfNotContaining(text.toLowerCase());
