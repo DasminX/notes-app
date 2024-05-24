@@ -62,7 +62,7 @@ If you'd like to launch it on your own local machine, no worries! You can do it 
 
 ## Thoughts
 
-Currently I'm handling \_currentEditedNote and things related to it in notesApp class, but after considerations I think it may be also a part of NotesCollection. It all depends on the context of handling it. For now I won't change it, but I want to make it clear I'm aware of it can be accomplished another way.
+Currently I'm handling **_\_currentEditedNote_** and things related to it in notesApp class, but after considerations I think it may be also a part of NotesCollection. It all depends on the context of handling it. For now I won't change it, but I want to make it clear I'm aware of it can be accomplished another way.
 
 Additionally, there are many possible ways to make this app grow! When it's not more needed in recruitment process, I surely upgrade it!
 
