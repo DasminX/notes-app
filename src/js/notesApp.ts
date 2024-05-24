@@ -1,3 +1,4 @@
+import { Modal } from "./composable/Modal";
 import { Textarea } from "./composable/Textarea";
 import { Note } from "./entities/note";
 import { NotesCollection } from "./notesCollection";
@@ -31,7 +32,7 @@ export class NotesApp {
   private _currentEditedNote: Note | null;
   /* END Crucial behaviour-related fields */
 
-  constructor(private readonly _container: HTMLElement) {
+  constructor(private readonly _container: HTMLElement, private readonly _modal: Modal) {
     this._searchInput = this._container.querySelector("#searchbar > input") as HTMLInputElement;
 
     this._addNewNoteArea = this._container.querySelector("#addNewNote") as HTMLDivElement;
@@ -123,12 +124,16 @@ export class NotesApp {
       this._currentEditedNote = edittedNote;
       this._state = this._setState(States.EDITING);
     } else if (e.target.classList.contains("remove")) {
-      this._notesCollection.remove(noteId);
-      if (this._currentEditedNote?.id === noteId) {
-        this._state = this._setState(States.IDLE);
-      } else {
-        this._state = this._setState(this._state);
-      }
+      this._modal.confirm((yes: boolean) => {
+        if (!yes) return;
+
+        this._notesCollection.remove(noteId);
+        if (this._currentEditedNote?.id === noteId) {
+          this._state = this._setState(States.IDLE);
+        } else {
+          this._state = this._setState(this._state);
+        }
+      });
     }
   }
 

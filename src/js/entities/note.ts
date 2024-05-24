@@ -35,11 +35,12 @@ export class Note {
   }
 
   public insertHTMLInto(node: Element): HTMLDivElement {
-    this._noteHTMLElement = HTMLBuilder.insertAdjacentHTML(
-      node,
-      "beforeend",
-      `.note[data-id="${this.id}"]`,
-      `<div class="note" data-id="${this.id}">
+    this._noteHTMLElement = HTMLBuilder.insertAdjacentHTML({
+      into: node,
+      at: "beforeend",
+      returnElementWithSelector: `.note[data-id="${this.id}"]`,
+      HTML: `
+      <div class="note" data-id="${this.id}">
         <div class="titlebar">
           <p class="title-medium">${this.title}</p>
           <div class="controls">
@@ -73,8 +74,9 @@ export class Note {
           </div>
           <p class="body text-medium">${this.content}</p>
           <div class="adddate text-small">${this.humanReadableDate}</div>
-        </div>`
-    );
+        </div>
+      `,
+    }) as HTMLDivElement;
 
     this._titleHTMLElement = this._noteHTMLElement.querySelector(".body") as HTMLParagraphElement;
 

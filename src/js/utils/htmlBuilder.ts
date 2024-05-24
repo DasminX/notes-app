@@ -50,15 +50,31 @@ export class HTMLBuilder {
     return parent.appendChild(el) as T;
   }
 
-  public static insertAdjacentHTML<T extends Element>(
-    into: Element,
-    at: InsertPosition,
-    returnElementWithSelector: string,
-    HTML: string
-  ): T {
+  public static insertAdjacentHTML<T extends Element | null>({
+    into,
+    at,
+    HTML,
+    returnElementWithSelector = "NO-SELECTOR",
+  }: {
+    into: Element;
+    at: InsertPosition;
+    HTML: string;
+    returnElementWithSelector?: string;
+  }): T | T[] {
     into.insertAdjacentHTML(at, HTML);
 
-    return into.querySelector(returnElementWithSelector) as T;
+    if (returnElementWithSelector === "NO-SELECTOR") return null;
+
+    if (returnElementWithSelector.includes(",")) {
+      const elements: T[] = [];
+      returnElementWithSelector.split(",").forEach((segment) => {
+        elements.push(into.querySelector(segment));
+      });
+
+      return elements;
+    } else {
+      return into.querySelector(returnElementWithSelector) as T;
+    }
   }
 
   public static setVisibility(element: Element, visible: boolean): void {

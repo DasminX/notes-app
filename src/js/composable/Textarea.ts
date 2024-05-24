@@ -72,24 +72,24 @@ export class Textarea {
       text: this._options.addButton?.text,
     });
 
-    this._dragger = HTMLBuilder.insertAdjacentHTML(
-      this._container,
-      "beforeend",
-      ".dragger",
-      `
-      <svg
-        class="dragger"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-          <path d="M15.333 12.3467V15.3333H12.3463L15.333 12.3467Z" fill="#3B3C3E" />
-          <path d="M15.333 7.68002V10.32L10.3197 15.3334H7.67969L15.333 7.68002Z" fill="#5B5C5E" />
-          <path d="M15.3331 3.01334V5.65334L5.65306 15.3333H3.01306L15.3331 3.01334Z" fill="#858686" />
-      </svg>
-    `
-    );
+    this._dragger = HTMLBuilder.insertAdjacentHTML({
+      into: this._container,
+      at: "beforeend",
+      returnElementWithSelector: ".dragger",
+      HTML: `
+        <svg
+          class="dragger"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.333 12.3467V15.3333H12.3463L15.333 12.3467Z" fill="#3B3C3E" />
+            <path d="M15.333 7.68002V10.32L10.3197 15.3334H7.67969L15.333 7.68002Z" fill="#5B5C5E" />
+            <path d="M15.3331 3.01334V5.65334L5.65306 15.3333H3.01306L15.3331 3.01334Z" fill="#858686" />
+        </svg>
+      `,
+    }) as SVGElement;
   }
 
   private _handleClick() {
