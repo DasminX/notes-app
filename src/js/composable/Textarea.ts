@@ -68,7 +68,7 @@ export class Textarea {
     });
 
     this._addButton = HTMLBuilder.createElement("button", this._container, {
-      class: ["add", ...(this._options.addButton?.classes || [])],
+      class: ["add", "button", "dark", ...(this._options.addButton?.classes || [])],
       text: this._options.addButton?.text,
     });
 

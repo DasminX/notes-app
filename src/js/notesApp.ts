@@ -60,9 +60,11 @@ export class NotesApp {
     this._searchInput.addEventListener("input", (e) => {
       this._searchNotes(e);
     });
+
     this._noNotesYetFieldAddNoteBtn.addEventListener("click", () => {
       this._state = this._setState(States.ADDING);
     });
+
     this._notesListAddNoteBtn.addEventListener("click", () => {
       this._state = this._setState(States.ADDING);
     });
