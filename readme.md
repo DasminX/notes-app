@@ -16,12 +16,13 @@ If you'd like to launch it on your own local machine, no worries! You can do it 
 
 TODO LIST FOR ME IN APP:
 
-- adding title
+- adding title (different textarea modes, "bare", "title-desc")
 - change note MM/DD to more specific
 - disabled add/edit button if empty textarea
 - add settings class and modal to manage styles, behaviour etc.
 - clean types
-- htmlBuilder.insertAdjacentHTML to be more declarative (and types to fix!)
+- notifications
+- modal options (not/clickable overlay etc.)
 
 ---
 

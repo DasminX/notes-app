@@ -9,7 +9,11 @@ type createOptions = Readonly<{
 }>;
 
 export class HTMLBuilder {
-  public static createElement<T extends HTMLElement>(tag: keyof HTMLElementTagNameMap, parent: HTMLElement, opts?: createOptions): T {
+  public static createElement<T extends HTMLElement | SVGElement>(
+    tag: keyof HTMLElementTagNameMap,
+    parent: HTMLElement,
+    opts?: createOptions
+  ): T {
     const el = document.createElement(tag);
 
     if (opts?.id) {
@@ -50,30 +54,26 @@ export class HTMLBuilder {
     return parent.appendChild(el) as T;
   }
 
-  public static insertAdjacentHTML<T extends Element | null>({
-    into,
-    at,
-    HTML,
-    returnElementWithSelector = "NO-SELECTOR",
-  }: {
-    into: Element;
-    at: InsertPosition;
-    HTML: string;
-    returnElementWithSelector?: string;
-  }): T | T[] {
+  // prettier-ignore
+  public static insertAdjacentHTML<T extends Element>({ into, at, HTML }: { into: Element; at: InsertPosition; HTML: string }): void;
+  // prettier-ignore
+  public static insertAdjacentHTML<T extends Element>({ into, at, HTML, returnElementWithSelector }: { into: Element; at: InsertPosition; HTML: string, returnElementWithSelector: string }): T;
+  // prettier-ignore
+  public static insertAdjacentHTML<T extends Element>({ into, at, HTML, returnElementWithSelector }: { into: Element; at: InsertPosition; HTML: string, returnElementWithSelector: string[] }): T[];
+  // prettier-ignore
+  public static insertAdjacentHTML<T extends Element>({ into, at, HTML, returnElementWithSelector }: { into: Element; at: InsertPosition; HTML: string, returnElementWithSelector?: string | string[] }): T | T[] | void {
     into.insertAdjacentHTML(at, HTML);
-
-    if (returnElementWithSelector === "NO-SELECTOR") return null;
-
-    if (returnElementWithSelector.includes(",")) {
+    
+    if (typeof returnElementWithSelector === "string") {
+      return into.querySelector(returnElementWithSelector) as T;
+    } else if (Array.isArray(returnElementWithSelector)) {
       const elements: T[] = [];
-      returnElementWithSelector.split(",").forEach((segment) => {
-        elements.push(into.querySelector(segment));
+      
+      returnElementWithSelector.forEach(selector => {
+        elements.push(into.querySelector(selector))
       });
 
       return elements;
-    } else {
-      return into.querySelector(returnElementWithSelector) as T;
     }
   }
 

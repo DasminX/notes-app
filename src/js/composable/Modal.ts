@@ -34,7 +34,7 @@ export class Modal {
     const [cancelBtn, deleteBtn] = HTMLBuilder.insertAdjacentHTML({
       into: this._modal,
       at: "beforeend",
-      returnElementWithSelector: ".cancel, .delete",
+      returnElementWithSelector: [".cancel, .delete"],
       HTML: `
         <p class="title-large title">Delete Note</p>
         <p class="text-extramedium prompt">Are you sure you want to delete this note?</p>
