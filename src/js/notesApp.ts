@@ -58,9 +58,7 @@ export class NotesApp {
   }
 
   private _bindListeners() {
-    this._searchInput.addEventListener("input", (e) => {
-      this._searchNotes(e);
-    });
+    this._searchInput.addEventListener("input", this._searchNotes.bind(this));
 
     this._noNotesYetFieldAddNoteBtn.addEventListener("click", () => {
       this._state = this._setState(States.ADDING);
@@ -105,10 +103,8 @@ export class NotesApp {
   }
 
   /* Handlers */
-  private _searchNotes(e: Event) {
-    if (!e.target || !("value" in e.target)) return;
-
-    this._notesCollection.hideEveryNotContaining(e.target.value as string);
+  private _searchNotes() {
+    this._notesCollection.hideEveryNotContaining(this._searchInput.value);
   }
 
   private _notesListClickHandler(e: any) {
@@ -145,6 +141,8 @@ export class NotesApp {
     } else if (this._state === States.ADDING) {
       this._notesCollection.add(`Random note no. ${Math.random().toString().slice(2, 6)}`, text);
     }
+    this._searchNotes();
+
     this._state = this._setState(States.IDLE);
   }
 }

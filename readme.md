@@ -16,11 +16,9 @@ If you'd like to launch it on your own local machine, no worries! You can do it 
 
 TODO LIST FOR ME IN APP:
 
-- filter again if added/edited note
 - adding title
 - change note MM/DD to more specific
 - disabled add/edit button if empty textarea
-- cancel btn hover effect
 - add settings class and modal to manage styles, behaviour etc.
 - clean types
 - htmlBuilder.insertAdjacentHTML to be more declarative (and types to fix!)

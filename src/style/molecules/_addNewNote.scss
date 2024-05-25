@@ -24,6 +24,10 @@
       border: none;
       outline: none;
       background-color: transparent;
+
+      &:hover {
+        border-bottom: 1px solid #0f75b8;
+      }
     }
   }
 }
